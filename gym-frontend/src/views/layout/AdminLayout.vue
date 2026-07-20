@@ -34,9 +34,9 @@
               <el-icon><Reading /></el-icon>
               <span>课程管理</span>
             </template>
-            <el-menu-item index="/courses/group">团课管理</el-menu-item>
-            <el-menu-item index="/courses/private">私教管理</el-menu-item>
-            <el-menu-item index="/courses/reviews">评价管理</el-menu-item>
+    <el-menu-item index="/courses/group"><el-icon><Collection /></el-icon><span>团课管理</span></el-menu-item>
+    <el-menu-item index="/courses/private"><el-icon><Avatar /></el-icon><span>私教管理</span></el-menu-item>
+    <el-menu-item index="/courses/reviews"><el-icon><Star /></el-icon><span>评价管理</span></el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="venues">
@@ -44,7 +44,7 @@
               <el-icon><OfficeBuilding /></el-icon>
               <span>场馆管理</span>
             </template>
-            <el-menu-item index="/venues">场馆列表</el-menu-item>
+            <el-menu-item index="/venues"><el-icon><OfficeBuilding /></el-icon><span>场馆列表</span></el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="users">
@@ -52,10 +52,10 @@
               <el-icon><User /></el-icon>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="/users/members">会员列表</el-menu-item>
-            <el-menu-item index="/users/levels">会员等级</el-menu-item>
-            <el-menu-item index="/users/cards">会员卡</el-menu-item>
-            <el-menu-item index="/users/coaches">教练列表</el-menu-item>
+    <el-menu-item index="/users/members"><el-icon><UserFilled /></el-icon><span>会员列表</span></el-menu-item>
+    <el-menu-item index="/users/levels"><el-icon><Medal /></el-icon><span>会员等级</span></el-menu-item>
+    <el-menu-item index="/users/cards"><el-icon><CreditCard /></el-icon><span>会员卡</span></el-menu-item>
+    <el-menu-item index="/users/coaches"><el-icon><User /></el-icon><span>教练列表</span></el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="shop">
@@ -63,9 +63,9 @@
               <el-icon><ShoppingCart /></el-icon>
               <span>商城管理</span>
             </template>
-            <el-menu-item index="/shop/products">商品列表</el-menu-item>
-            <el-menu-item index="/shop/categories">商品分类</el-menu-item>
-            <el-menu-item index="/shop/orders">商城订单</el-menu-item>
+    <el-menu-item index="/shop/products"><el-icon><Goods /></el-icon><span>商品列表</span></el-menu-item>
+    <el-menu-item index="/shop/categories"><el-icon><Menu /></el-icon><span>商品分类</span></el-menu-item>
+    <el-menu-item index="/shop/orders"><el-icon><Document /></el-icon><span>商城订单</span></el-menu-item>
           </el-sub-menu>
 
           <el-menu-item index="/bookings">
@@ -80,7 +80,7 @@
               <el-icon><Present /></el-icon>
               <span>活动管理</span>
             </template>
-            <el-menu-item index="/activity/coupons">优惠券</el-menu-item>
+            <el-menu-item index="/activity/coupons"><el-icon><Ticket /></el-icon><span>优惠券</span></el-menu-item>
           </el-sub-menu>
 
           <el-sub-menu index="system">
@@ -88,11 +88,11 @@
               <el-icon><Setting /></el-icon>
               <span>系统管理</span>
             </template>
-            <el-menu-item index="/system/users">成员管理</el-menu-item>
-            <el-menu-item index="/system/roles">角色管理</el-menu-item>
-            <el-menu-item index="/system/ads">广告管理</el-menu-item>
-            <el-menu-item index="/system/announcements">公告管理</el-menu-item>
-            <el-menu-item index="/system/config">系统配置</el-menu-item>
+    <el-menu-item index="/system/users"><el-icon><User /></el-icon><span>成员管理</span></el-menu-item>
+    <el-menu-item index="/system/roles"><el-icon><Key /></el-icon><span>角色管理</span></el-menu-item>
+    <el-menu-item index="/system/ads"><el-icon><Picture /></el-icon><span>广告管理</span></el-menu-item>
+    <el-menu-item index="/system/announcements"><el-icon><Bell /></el-icon><span>公告管理</span></el-menu-item>
+    <el-menu-item index="/system/config"><el-icon><Setting /></el-icon><span>系统配置</span></el-menu-item>
           </el-sub-menu>
         </el-menu>
       </div>

@@ -5,17 +5,10 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gym_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true
     username: root
-    password: jun838651
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-      data-locations: classpath:data.sql
-      encoding: UTF-8
 
 mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.gym.entity
   configuration:
     map-underscore-to-camel-case: true
