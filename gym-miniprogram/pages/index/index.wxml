@@ -1,0 +1,108 @@
+<!-- pages/index/index.wxml -->
+<view class="home">
+
+  <!-- 顶部 Banner 轮播 -->
+  <view class="banner">
+    <view class="banner-slide" style="background:{{banners[bannerIdx].bg}}">
+      <view class="banner-emoji">{{banners[bannerIdx].emoji}}</view>
+      <view class="banner-title">{{banners[bannerIdx].title}}</view>
+      <view class="banner-sub">{{banners[bannerIdx].sub}}</view>
+    </view>
+    <view class="banner-dots">
+      <view wx:for="{{banners}}" wx:key="*this" class="dot {{index === bannerIdx ? 'dot--active' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 健身公告 -->
+  <view class="notice">
+    <view class="notice-icon">📣</view>
+    <view class="notice-text">健身房开通私教课程服务400家门店在营业，欢迎到店体验！</view>
+  </view>
+
+  <!-- 推荐私教 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="section-bar"></text>
+        <text>推荐私教</text>
+      </view>
+      <view class="section-more">更多 ></view>
+    </view>
+    <scroll-view scroll-x class="card-row" enable-flex>
+      <view wx:for="{{privateCourses}}" wx:key="id" class="big-card">
+        <view class="big-card-cover cover-{{item.colorIdx}}">
+          <text class="big-card-emoji">{{item.emoji}}</text>
+          <view wx:if="{{item.hot}}" class="hot-badge">HOT</view>
+        </view>
+        <view class="big-card-body">
+          <view class="big-card-title">{{item.name}}</view>
+          <view class="big-card-tags">{{item.tagsText}}</view>
+          <view class="big-card-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-num">{{item.price}}</text>
+            <text class="price-unit">/节</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 推荐课程 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="section-bar"></text>
+        <text>推荐课程</text>
+      </view>
+      <view class="section-more">更多 ></view>
+    </view>
+    <scroll-view scroll-x class="card-row" enable-flex>
+      <view wx:for="{{groupCourses}}" wx:key="id" class="big-card">
+        <view class="big-card-cover cover-{{item.colorIdx}}">
+          <text class="big-card-emoji">{{item.emoji}}</text>
+        </view>
+        <view class="big-card-body">
+          <view class="big-card-title">{{item.name}}</view>
+          <view class="big-card-tags">{{item.tagsText}}</view>
+          <view class="big-card-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-num">{{item.price}}</text>
+            <text class="price-unit">/节</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 周边商品 -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">
+        <text class="section-bar"></text>
+        <text>周边商品</text>
+      </view>
+      <view class="section-more">更多 ></view>
+    </view>
+    <view class="product-grid">
+      <view wx:for="{{products}}" wx:key="id" class="product-card">
+        <view class="product-cover cover-{{item.colorIdx}}">
+          <text class="product-emoji">{{item.emoji}}</text>
+        </view>
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-bottom">
+          <view class="product-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-num">{{item.price}}</text>
+          </view>
+          <view class="cart-btn">🛒</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading">
+    <view wx:if="{{loading}}" class="loading-spinner"></view>
+    <text>{{loadingText}}</text>
+  </view>
+</view>

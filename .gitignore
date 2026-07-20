@@ -1,21 +1,22 @@
 # ===== 通用 =====
 *.log
 *.tmp
-.DS_Store
-Thumbs.db
+*.bak
 
-# ===== 后端 (Spring Boot) =====
-gym-backend/target/
+# ===== Node.js / 前端 =====
+node_modules/
+dist/
+*.local
+
+# ===== 后端 =====
+**/target/
+*.class
+*.jar
+*.war
 gym-backend/*.jar
 gym-backend/.idea/
 gym-backend/*.iml
 gym-backend/.mvn/
-
-# ===== 前端 (Vue) =====
-gym-frontend/node_modules/
-gym-frontend/dist/
-gym-frontend/.vite/
-gym-frontend/*.local
 
 # ===== IDE =====
 .idea/
@@ -24,7 +25,17 @@ gym-frontend/*.local
 *.swp
 *.swo
 
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
 # ===== 环境变量 =====
 .env
 .env.*
 !.env.example
+
+# ===== 小程序私密配置 =====
+project.private.config.json
+
+# ===== WorkBuddy =====
+.workbuddy/

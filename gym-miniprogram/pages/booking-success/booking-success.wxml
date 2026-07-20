@@ -1,0 +1,35 @@
+<!-- pages/booking-success/booking-success.wxml -->
+<view class="success-page">
+
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">预约成功</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <view class="hero">
+    <view class="hero-icon">
+      <text class="hero-emoji">📅</text>
+    </view>
+    <view class="hero-title">预约成功</view>
+  </view>
+
+  <view class="info-card">
+    <view class="info-row">
+      <text class="info-emoji">💳</text>
+      <text class="info-key">支付方式</text>
+      <text class="info-val info-val--red">{{info.payLabel}}</text>
+    </view>
+    <view class="info-divider"></view>
+    <view class="info-row">
+      <text class="info-emoji">💰</text>
+      <text class="info-key">支付金额</text>
+      <text class="info-val info-val--red">¥{{info.price}}</text>
+    </view>
+  </view>
+
+  <view class="action">
+    <view class="action-btn" bindtap="goMyBookings">查看我的预约</view>
+  </view>
+</view>

@@ -1,0 +1,65 @@
+<!-- pages/mine/mine.wxml -->
+<view class="mine-page">
+
+  <!-- 登录态下显示用户信息 -->
+  <block wx:if="{{isLogin}}">
+    <view class="user-card">
+      <view class="avatar">{{avatarText}}</view>
+      <view class="user-info">
+        <view class="nickname">{{userInfo.nickname || '健身会员'}}</view>
+        <view class="phone">{{userInfo.phone || ''}}</view>
+      </view>
+      <view class="badge">已登录</view>
+    </view>
+
+    <!-- 功能菜单（占位） -->
+    <view class="menu">
+      <view class="menu-item">
+        <text class="menu-icon">📅</text>
+        <text class="menu-label">我的预约</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-icon">💳</text>
+        <text class="menu-label">会员卡</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-icon">📦</text>
+        <text class="menu-label">我的订单</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-icon">🎫</text>
+        <text class="menu-label">优惠券</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item">
+        <text class="menu-icon">⭐</text>
+        <text class="menu-label">我的积分</text>
+        <view class="menu-extra">{{userInfo.points || 0}}</view>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 退出登录 -->
+    <view class="logout-area">
+      <view class="db-status">
+        <view class="db-dot {{dbOK ? 'db-dot--ok' : 'db-dot--err'}}"></view>
+        <text class="db-text">数据库 {{dbOK ? '已连接' : '未连接'}}</text>
+      </view>
+      <button class="logout-btn" bindtap="handleLogout">退出登录</button>
+      <text class="logout-hint">退出后可重新登录测试数据入库</text>
+    </view>
+  </block>
+
+  <!-- 未登录 -->
+  <block wx:else>
+    <view class="no-login">
+      <view class="nl-emoji">👤</view>
+      <view class="nl-title">尚未登录</view>
+      <view class="nl-sub">登录后可查看个人信息</view>
+      <button class="nl-btn" bindtap="goLogin">去登录</button>
+    </view>
+  </block>
+</view>

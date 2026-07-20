@@ -1,0 +1,157 @@
+<!-- pages/booking/booking.wxml -->
+<view class="booking-page">
+
+  <!-- 自定义顶部导航 -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">{{ tabIdx === 0 ? '团课首页' : '私教课程' }}</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <!-- 顶部 banner（预约 icon + 副标题） -->
+  <view class="banner">
+    <view class="banner-icon">📅</view>
+    <view class="banner-text">
+      <view class="banner-title">{{ tabIdx === 0 ? '团课预约' : '私教课程' }}</view>
+      <view class="banner-sub">{{ tabIdx === 0 ? '按时间段选课 · 满 2 人开班' : '专业教练 1 对 1 · 量身定制' }}</view>
+    </view>
+    <view class="banner-tag">{{ tabIdx === 0 ? 'GROUP' : 'PRIVATE' }}</view>
+  </view>
+
+  <!-- 团课 / 私教 tab -->
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="*this"
+      class="tab {{ tabIdx === index ? 'tab--active' : '' }}"
+      data-idx="{{index}}"
+      bindtap="switchTab"
+    >{{ item }}</view>
+  </view>
+
+  <!-- 预约场馆 -->
+  <view class="block">
+    <view class="block-title">预约场馆</view>
+    <view class="venue-picker" bindtap="openVenuePicker">
+      <text class="venue-icon">📍</text>
+      <text class="venue-name">{{ currentVenue ? currentVenue.name : '请选择场馆' }}</text>
+      <text class="venue-arrow">⌄</text>
+    </view>
+  </view>
+
+  <!-- 团课预约时间（仅团课 tab 显示） -->
+  <view class="block" wx:if="{{tabIdx === 0}}">
+    <view class="block-title">团课预约时间</view>
+    <scroll-view scroll-x class="date-strip" enable-flex enhanced>
+      <view
+        wx:for="{{dateList}}"
+        wx:key="dateStr"
+        class="date-item {{ item.dateStr === selectedDate ? 'date-item--active' : '' }}"
+        data-idx="{{index}}"
+        bindtap="selectDate"
+      >
+        <view class="date-week">{{ item.week }}</view>
+        <view class="date-day">{{ item.day }}</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 可预约课程 -->
+  <view class="block list-block">
+    <view class="block-title">可预约课程</view>
+
+    <!-- 团课：列表样式 -->
+    <view wx:if="{{tabIdx === 0}}" class="group-list">
+      <view
+        wx:for="{{groupSchedules}}"
+        wx:key="id"
+        class="group-card"
+        data-item="{{item}}"
+        bindtap="goCourseDetail"
+      >
+        <view class="group-cover cover-{{item.colorIdx}}">
+          <text class="group-emoji">{{item.emoji}}</text>
+          <view wx:if="{{item.booked >= item.capacity}}" class="cover-0-4">满</view>
+        </view>
+        <view class="group-body">
+          <view class="group-title">{{item.courseName}}</view>
+          <view class="group-meta">
+            <text class="meta-time">{{item.startTime}} - {{item.endTime}}</text>
+            <text class="meta-coach">教练 {{item.coach}}</text>
+          </view>
+          <view class="group-min">预约满{{item.capacity}}人开课</view>
+          <view class="group-tags">
+            <text wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this" class="tag">{{t}}</text>
+          </view>
+        </view>
+        <view class="group-right">
+          <view class="count">{{item.booked}}/{{item.capacity}}</view>
+          <view class="status status--{{item.status}}">
+            <text>{{item.statusText}}</text>
+            <text wx:if="{{item.status === 'waitlist'}}" class="list-icon">≡</text>
+          </view>
+          <view class="empty-status" wx:if="{{item.status === 'full'}}">名额不足</view>
+        </view>
+      </view>
+
+      <view wx:if="{{loading}}" class="loading">
+        <view class="loading-spinner"></view>
+        <text>正在加载...</text>
+      </view>
+      <view wx:if="{{!loading && groupSchedules.length === 0}}" class="empty">
+        <view class="empty-emoji">🏃</view>
+        <text>该日暂无团课安排</text>
+      </view>
+    </view>
+
+    <!-- 私教：双列网格 -->
+    <view wx:if="{{tabIdx === 1}}" class="private-grid">
+      <view
+        wx:for="{{privateList}}"
+        wx:key="id"
+        class="private-card"
+        data-id="{{item.id}}"
+        bindtap="goCourseDetail"
+      >
+        <view class="private-cover cover-{{item.colorIdx}}">
+          <text class="private-emoji">{{item.emoji}}</text>
+        </view>
+        <view class="private-name">{{item.name}}</view>
+        <view class="private-coach">{{item.coachTag}}</view>
+        <view class="private-bottom">
+          <view class="private-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-num">{{item.price}}</text>
+            <text class="price-unit">/起</text>
+          </view>
+          <view class="private-btn {{item.full ? 'private-btn--full' : ''}}">
+            {{item.full ? '满员' : '详情'}}
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{loading}}" class="loading">
+        <view class="loading-spinner"></view>
+        <text>正在加载...</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 场馆选择弹层 -->
+  <view wx:if="{{showVenuePicker}}" class="picker-mask" bindtap="closeVenuePicker">
+    <view class="picker-panel" catchtap="">
+      <view class="picker-title">选择预约场馆</view>
+      <view
+        wx:for="{{openVenues}}"
+        wx:key="id"
+        class="picker-item {{ currentVenue && currentVenue.id === item.id ? 'picker-item--active' : '' }}"
+        data-id="{{item.id}}"
+        bindtap="selectVenue"
+      >
+        <text class="picker-name">{{item.name}}</text>
+        <text class="picker-addr">{{item.address}}</text>
+        <text wx:if="{{currentVenue && currentVenue.id === item.id}}" class="picker-check">✓</text>
+      </view>
+    </view>
+  </view>
+</view>
