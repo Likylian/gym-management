@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="操作" width="180" fixed="right">
         <template #default="{row}">
-          <el-button size="small" type="primary" link>查看</el-button>
+          <el-button size="small" type="primary" link @click="goToDetail(row)">查看</el-button>
           <el-button size="small" type="primary" link @click="openDialog(row)">编辑</el-button>
           <el-button size="small" type="danger" link @click="handleDelete(row.id)">删除</el-button>
         </template>
@@ -46,9 +46,11 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getCoaches, addCoach, updateCoach, deleteCoach, getAllVenues } from '../../api'
 
+const router = useRouter()
 const list=ref([]), loading=ref(false), keyword=ref(''), venueFilter=ref(''), venues=ref([])
 const pageNum=ref(1), pageSize=ref(10), total=ref(0)
 const dialogVisible=ref(false), editId=ref(null)
@@ -56,6 +58,7 @@ const form=reactive({name:'',gender:'男',phone:'',sort:0,status:1})
 
 const loadData=async()=>{loading.value=true;try{const r=await getCoaches({pageNum:pageNum.value,pageSize:pageSize.value,keyword:keyword.value,venueIds:venueFilter.value});list.value=r.data.records;total.value=Number(r.data.total)}finally{loading.value=false}}
 const openDialog=(row)=>{if(row){editId.value=row.id;Object.assign(form,row)}else{editId.value=null;Object.assign(form,{name:'',gender:'男',phone:'',sort:0,status:1})}dialogVisible.value=true}
+const goToDetail=(row)=>{router.push({ name:'CoachDetail', params:{ id: row.id } })}
 const handleSave=async()=>{if(editId.value)await updateCoach(editId.value,form);else await addCoach(form);ElMessage.success('保存成功');dialogVisible.value=false;loadData()}
 const handleDelete=async(id)=>{await ElMessageBox.confirm('确定删除?','提示',{type:'warning'});await deleteCoach(id);ElMessage.success('删除成功');loadData()}
 onMounted(async()=>{try{const r=await getAllVenues();venues.value=r.data}catch(e){}loadData()})

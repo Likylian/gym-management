@@ -20,6 +20,7 @@ const routes = [
       { path: 'users/levels', name: 'MemberLevels', component: () => import('../views/users/MemberLevels.vue'), meta: { title: '会员等级' } },
       { path: 'users/cards', name: 'MemberCards', component: () => import('../views/users/MemberCards.vue'), meta: { title: '会员卡' } },
       { path: 'users/coaches', name: 'Coaches', component: () => import('../views/users/CoachList.vue'), meta: { title: '教练列表' } },
+      { path: 'users/coaches/:id', name: 'CoachDetail', component: () => import('../views/users/CoachDetail.vue'), meta: { title: '教练详情' } },
       { path: 'shop/products', name: 'Products', component: () => import('../views/shop/ProductList.vue'), meta: { title: '商品列表' } },
       { path: 'shop/categories', name: 'ProductCategories', component: () => import('../views/shop/ProductCategories.vue'), meta: { title: '商品分类' } },
       { path: 'shop/orders', name: 'Orders', component: () => import('../views/shop/OrderList.vue'), meta: { title: '商城订单' } },

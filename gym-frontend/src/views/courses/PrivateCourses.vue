@@ -20,15 +20,36 @@
       <el-table-column prop="sort" label="排序" width="70" align="center" />
       <el-table-column label="时长" width="90" align="center"><template #default="{ row }">{{ row.duration }}分钟</template></el-table-column>
       <el-table-column prop="maxPeople" label="可预约人数" width="100" align="center" />
-      <el-table-column label="操作" width="200" fixed="right">
+      <el-table-column label="操作" width="240" fixed="right">
         <template #default="{ row }">
           <el-button size="small" type="primary" link @click="openDialog(row)">编辑</el-button>
-          <el-button size="small" type="warning" link>排期</el-button>
+          <el-button size="small" type="warning" link @click="openSchedule(row)">排期</el-button>
           <el-button size="small" type="danger" link @click="handleDelete(row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination style="margin-top:12px;justify-content:flex-end;" background layout="total, prev, pager, next" :total="total" :page-size="pageSize" v-model:current-page="pageNum" @current-change="loadData" />
+    <el-dialog v-model="scheduleDialogVisible" :title="`${selectedCourse.name} 排期管理`" width="600px">
+      <div style="margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+        <el-form :model="scheduleForm" label-width="80px" inline>
+          <el-form-item label="日期"><el-date-picker v-model="scheduleForm.date" type="date" placeholder="选择日期" /></el-form-item>
+          <el-form-item label="时间"><el-time-picker v-model="scheduleForm.time" placeholder="选择时间" /></el-form-item>
+          <el-form-item label="可约人数"><el-input-number v-model="scheduleForm.available" :min="1" :max="selectedCourse.maxPeople || 20" /></el-form-item>
+          <el-form-item><el-button type="primary" @click="addSchedule">添加排期</el-button></el-form-item>
+        </el-form>
+      </div>
+      <el-table :data="courseSchedules" border stripe size="small">
+        <el-table-column prop="date" label="日期" width="120" />
+        <el-table-column prop="time" label="时间" width="100" />
+        <el-table-column prop="available" label="可预约人数" width="120" align="center" />
+        <el-table-column label="操作" width="120" align="center">
+          <template #default="{row}"><el-button type="danger" size="small" link @click="removeSchedule(row.id)">删除</el-button></template>
+        </el-table-column>
+      </el-table>
+      <template #footer>
+        <el-button @click="scheduleDialogVisible=false">关闭</el-button>
+      </template>
+    </el-dialog>
     <el-dialog v-model="dialogVisible" :title="editId ? '编辑私教' : '添加私教'" width="500px">
       <el-form :model="form" label-width="80px">
         <el-form-item label="课程名称"><el-input v-model="form.name" /></el-form-item>
@@ -46,7 +67,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getPrivateCourses, addPrivateCourse, updatePrivateCourse, deletePrivateCourse } from '../../api'
 
@@ -58,8 +79,12 @@ const pageNum = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
 const dialogVisible = ref(false)
+const scheduleDialogVisible = ref(false)
 const editId = ref(null)
-const form = reactive({ name:'', coach:'', duration:50, sort:0, tags:'' })
+const form = reactive({ name:'', coach:'', duration:50, sort:0, tags:'', maxPeople:1 })
+const selectedCourse = reactive({ id:null, name:'', coach:'', duration:0, sort:0, tags:'', maxPeople:1 })
+const scheduleForm = reactive({ date:'', time:'', available:1 })
+const schedules = ref([])
 
 const loadData = async () => {
   loading.value = true
@@ -71,8 +96,42 @@ const loadData = async () => {
 
 const openDialog = (row) => {
   if (row) { editId.value = row.id; Object.assign(form, row) }
-  else { editId.value = null; Object.assign(form, { name:'', coach:'', duration:50, sort:0, tags:'' }) }
+  else { editId.value = null; Object.assign(form, { name:'', coach:'', duration:50, sort:0, tags:'', maxPeople:1 }) }
   dialogVisible.value = true
+}
+
+const openSchedule = (row) => {
+  selectedCourse.id = row.id
+  selectedCourse.name = row.name
+  selectedCourse.coach = row.coach
+  selectedCourse.duration = row.duration
+  selectedCourse.sort = row.sort
+  selectedCourse.tags = row.tags
+  selectedCourse.maxPeople = row.maxPeople || 1
+  scheduleForm.date = ''
+  scheduleForm.time = ''
+  scheduleForm.available = selectedCourse.maxPeople
+  scheduleDialogVisible.value = true
+}
+
+const courseSchedules = computed(() => schedules.value.filter(item => item.courseId === selectedCourse.id))
+
+const addSchedule = () => {
+  if (!scheduleForm.date || !scheduleForm.time) {
+    ElMessage.warning('请选择日期和时间')
+    return
+  }
+  const nextId = Math.max(0, ...schedules.value.map(item => item.id)) + 1
+  schedules.value.push({ id: nextId, courseId: selectedCourse.id, date: scheduleForm.date, time: scheduleForm.time, available: scheduleForm.available })
+  ElMessage.success('排期已添加')
+  scheduleForm.date = ''
+  scheduleForm.time = ''
+}
+
+const removeSchedule = async (id) => {
+  await ElMessageBox.confirm('确定删除该排期吗？', '提示', { type: 'warning' })
+  schedules.value = schedules.value.filter(item => item.id !== id)
+  ElMessage.success('排期已删除')
 }
 
 const handleSave = async () => {

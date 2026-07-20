@@ -27,6 +27,7 @@ export const updateMember = (id, data) => request.put(`/members/${id}`, data)
 export const deleteMember = (id) => request.delete(`/members/${id}`)
 
 export const getCoaches = (params) => request.get('/coaches', { params })
+export const getCoach = (id) => request.get(`/coaches/${id}`)
 export const addCoach = (data) => request.post('/coaches', data)
 export const updateCoach = (id, data) => request.put(`/coaches/${id}`, data)
 export const deleteCoach = (id) => request.delete(`/coaches/${id}`)
