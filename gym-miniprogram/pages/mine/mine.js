@@ -53,5 +53,17 @@ Page({
 
   goLogin() {
     wx.reLaunch({ url: '/pages/login/login' });
+  },
+
+  goMyBookings() {
+    wx.navigateTo({ url: '/pages/my-bookings/my-bookings' });
+  },
+
+  goMemberCards() {
+    wx.navigateTo({ url: '/pages/member-cards/member-cards' });
+  },
+
+  goMyMemberCards() {
+    wx.navigateTo({ url: '/pages/my-member-cards/my-member-cards' });
   }
 });

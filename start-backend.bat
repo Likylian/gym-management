@@ -27,9 +27,15 @@ if not exist "target\gym-backend-1.0.0.jar" (
     exit /b 1
 )
 
-"C:\Program Files\Java\jdk-26.0.1\bin\java.exe" ^
+start "Gym Backend" /B "C:\Program Files\Java\jdk-26.0.1\bin\java.exe" ^
   -Dserver.port=8080 ^
   -Dserver.address=0.0.0.0 ^
   -jar target\gym-backend-1.0.0.jar
 
-pause
+echo ============================================
+echo  Backend starting in a new window.
+echo  Look for "Gym Backend" window title.
+echo  You can close this launcher window safely.
+echo ============================================
+timeout /t 3 /nobreak >nul
+exit

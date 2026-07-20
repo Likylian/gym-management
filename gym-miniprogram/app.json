@@ -11,7 +11,15 @@
     "pages/venue-detail/venue-detail",
     "pages/group-detail/group-detail",
     "pages/booking-confirm/booking-confirm",
-    "pages/booking-success/booking-success"
+    "pages/booking-success/booking-success",
+    "pages/private-detail/private-detail",
+    "pages/private-booking-confirm/private-booking-confirm",
+    "pages/private-booking-success/private-booking-success",
+    "pages/my-bookings/my-bookings",
+    "pages/member-cards/member-cards",
+    "pages/card-detail/card-detail",
+    "pages/card-success/card-success",
+    "pages/my-member-cards/my-member-cards"
   ],
   "window": {
     "backgroundTextStyle": "light",

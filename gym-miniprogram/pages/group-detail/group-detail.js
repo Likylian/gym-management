@@ -59,12 +59,14 @@ const COURSE_CONTENT = {
   ]
 };
 
-// 会员卡模板（所有课程共用）
-const MEMBER_CARDS = [
-  { id: 1, name: '健身2次体验', typeLabel: '次卡类型', typeValue: '次卡', discount: '1次', venues: '全部场馆', theme: 'purple' },
-  { id: 2, name: '健身黄金卡', typeLabel: '储值类型', typeValue: '储值卡', discount: '100元', venues: '全部场馆', theme: 'red' },
-  { id: 3, name: '健身2次体验', typeLabel: '期限类型', typeValue: '期限卡', discount: '30天', venues: '全部场馆', theme: 'teal' }
-];
+// 会员卡主题色映射
+const CARD_THEMES = {
+  '次卡': 'purple',
+  '储值': 'red',
+  '储值卡': 'red',
+  '期限': 'teal',
+  '期限卡': 'teal'
+};
 
 // 评价模板（按课程名区分）
 const REVIEW_TEMPLATES = {
@@ -115,11 +117,11 @@ Page({
       date: options.date,
       startTime: options.startTime,
       endTime: options.endTime,
-      coach: options.coach,
+      coach: decodeURIComponent(options.coach || ''),
       capacity: parseInt(options.capacity || '4', 10),
       booked: parseInt(options.booked || '0', 10),
       status: options.status,
-      venueName: options.venueName || '健身场馆'
+      venueName: decodeURIComponent(options.venueName || '健身场馆')
     };
     this.setData({ schedule });
     this._buildCourse(schedule);
@@ -152,10 +154,40 @@ Page({
         ...s,
         imageEmoji: s.imageEmoji || GROUP_EMOJI[(schedule.courseId + 1) % GROUP_EMOJI.length]
       })),
-      memberCards: MEMBER_CARDS,
+      memberCards: [],
       reviews: reviews
     };
     this.setData({ course });
+    this._loadMemberCards();
+  },
+
+  // 从后端加载会员卡（用于"支持会员卡"tab）
+  async _loadMemberCards() {
+    try {
+      const api = require('../../utils/api.js');
+      const list = await api.getCardProducts();
+      const cards = (list || []).map(c => ({
+        id: c.id,
+        name: c.name,
+        typeLabel: c.cardType === '次卡' ? '次卡类型'
+                : c.cardType === '储值' || c.cardType === '储值卡' ? '储值类型'
+                : c.cardType === '期限' || c.cardType === '期限卡' ? '期限类型'
+                : c.cardType,
+        typeValue: c.cardType,
+        discount: c.cardType === '次卡' ? `${c.times || 0}次`
+                : c.cardType === '储值' || c.cardType === '储值卡' ? `${c.balance || 0}元`
+                : c.cardType === '期限' || c.cardType === '期限卡' ? `${c.days || 0}天`
+                : '',
+        venues: c.supportedVenues || '全部场馆',
+        theme: CARD_THEMES[c.cardType] || 'purple'
+      }));
+      // 更新 course.memberCards
+      const course = this.data.course || {};
+      course.memberCards = cards;
+      this.setData({ course });
+    } catch (e) {
+      // 静默失败
+    }
   },
 
   // ============ tab 切换 ============
@@ -195,6 +227,13 @@ Page({
   },
 
   // ============ 辅助操作 ============
+  goBack() {
+    wx.navigateBack({ fail: () => {
+      // 如果没有上一页（深链接进来），回到预约 tab
+      wx.switchTab({ url: '/pages/booking/booking' });
+    } });
+  },
+
   contactCoach() {
     wx.showToast({ title: '联系教练功能开发中', icon: 'none' });
   },
@@ -205,6 +244,7 @@ Page({
 
   buyCard(e) {
     const id = e.currentTarget.dataset.id;
-    wx.showToast({ title: `购买会员卡 ${id} 待开发`, icon: 'none' });
+    // 跳到真正的会员卡详情页（带规格选择）
+    wx.navigateTo({ url: `/pages/card-detail/card-detail?id=${id}` });
   }
 });

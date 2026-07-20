@@ -73,5 +73,58 @@ module.exports = {
   getMyBookings(params) {
     const q = params ? '?' + Object.entries(params).map(([k, v]) => `${k}=${v}`).join('&') : '';
     return request({ url: '/api/bookings' + q, method: 'GET', auth: true });
+  },
+
+  cancelBooking(id) {
+    return request({
+      url: `/api/bookings/${id}/cancel`,
+      method: 'POST',
+      auth: true
+    });
+  },
+
+  // ===== 私教详情 / 时段 =====
+  getPrivateCourseById(id) {
+    return request({ url: `/api/private-courses/${id}`, method: 'GET' });
+  },
+
+  getPrivateSlots(courseId, date) {
+    return request({
+      url: `/api/private-slots?courseId=${courseId}&date=${date}`,
+      method: 'GET'
+    });
+  },
+
+  bookPrivateSlot(slotId, payload) {
+    return request({
+      url: `/api/private-slots/${slotId}/book`,
+      method: 'POST',
+      data: payload,
+      auth: true
+    });
+  },
+
+  // ===== 会员卡 =====
+  getCardProducts(type) {
+    const q = type ? `?type=${encodeURIComponent(type)}` : '';
+    return request({ url: `/api/card-products${q}`, method: 'GET' });
+  },
+
+  getCardProductById(id) {
+    return request({ url: `/api/card-products/${id}`, method: 'GET' });
+  },
+
+  getMyMemberCards(params) {
+    const q = params ? '?' + Object.entries(params).map(([k, v]) => `${k}=${v}`).join('&') : '';
+    return request({ url: '/api/member-cards' + q, method: 'GET' });
+  },
+
+  purchaseCard(cardId, payload) {
+    return request({
+      url: `/api/card-products/${cardId}/purchase`,
+      method: 'POST',
+      data: payload,
+      auth: true
+    });
   }
 };

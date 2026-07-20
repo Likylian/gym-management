@@ -1,6 +1,13 @@
 <!-- pages/group-detail/group-detail.wxml -->
 <view class="detail-page" wx:if="{{course}}">
 
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">团课详情</view>
+    <view class="navbar-right"></view>
+  </view>
+
   <!-- 顶部图 -->
   <view class="cover cover-{{course.colorIdx}}">
     <view class="cover-emoji">{{course.emoji}}</view>

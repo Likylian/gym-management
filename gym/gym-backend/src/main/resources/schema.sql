@@ -198,3 +198,47 @@ CREATE TABLE role (
     status INT DEFAULT 1,
     create_time DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+DROP TABLE IF EXISTS private_slot;
+CREATE TABLE private_slot (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    private_course_id BIGINT NOT NULL,
+    slot_date DATE NOT NULL,
+    slot_time VARCHAR(10) NOT NULL,
+    status INT DEFAULT 1 COMMENT '1=可约, 0=已约/不可约',
+    booked_by BIGINT,
+    booking_id BIGINT,
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_course_date (private_course_id, slot_date)
+);
+
+DROP TABLE IF EXISTS card_spec;
+DROP TABLE IF EXISTS card_product;
+CREATE TABLE card_product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    card_type VARCHAR(20) NOT NULL,
+    cover_color VARCHAR(20) DEFAULT 'purple',
+    base_price DECIMAL(10,2) NOT NULL,
+    original_price DECIMAL(10,2),
+    times INT,
+    balance DECIMAL(10,2),
+    days INT,
+    supported_venues VARCHAR(100) DEFAULT '全部场馆',
+    description TEXT,
+    status INT DEFAULT 1,
+    sort INT DEFAULT 0,
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE card_spec (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    card_product_id BIGINT NOT NULL,
+    label VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    original_price DECIMAL(10,2),
+    days INT,
+    times INT,
+    sort INT DEFAULT 0,
+    INDEX idx_product (card_product_id)
+);

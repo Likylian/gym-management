@@ -97,3 +97,21 @@ INSERT INTO role (name, code, description, status) VALUES
 ('管理员', 'admin', '管理后台基本权限', 1),
 ('运营', 'operator', '运营相关权限', 1),
 ('教练', 'coach', '教练查看权限', 1);
+
+-- 会员卡模板
+INSERT INTO card_product (name, card_type, cover_color, base_price, original_price, times, days, supported_venues, sort) VALUES
+('健身2次体验', '次卡', 'purple', 100.00, 200.00, 2, 5, '全部场馆', 1),
+('健身黄金卡', '期限', 'red', 1680.00, 2400.00, NULL, 90, '全部场馆', 2),
+('健身储值卡', '储值', 'teal', 500.00, 600.00, NULL, NULL, '全部场馆', 3);
+
+-- 会员卡规格
+INSERT INTO card_spec (card_product_id, label, price, original_price, days, times, sort) VALUES
+(1, '48元 (1次)', 48.00, 68.00, 5, 1, 1),
+(1, '168元 (6次)', 168.00, 408.00, 30, 6, 2),
+(1, '288元 (12次)', 288.00, 816.00, 60, 12, 3),
+(2, '500元 (1个月)', 500.00, 600.00, 30, NULL, 1),
+(2, '1680元 (3个月)', 1680.00, 2400.00, 90, NULL, 2),
+(2, '3600元 (6个月)', 3600.00, 4800.00, 180, NULL, 3),
+(3, '500元', 500.00, 600.00, NULL, NULL, 1),
+(3, '1000元', 1000.00, 1200.00, NULL, NULL, 2),
+(3, '3000元', 3000.00, 3600.00, NULL, NULL, 3);

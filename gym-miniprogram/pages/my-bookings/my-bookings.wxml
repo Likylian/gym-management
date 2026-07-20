@@ -1,0 +1,33 @@
+<!-- pages/my-bookings/my-bookings.wxml -->
+<view class="page">
+
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">我的预约</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list">
+    <view wx:for="{{bookings}}" wx:key="id" class="card">
+      <view class="card-top">
+        <view class="card-course">{{item.courseName}}</view>
+        <view class="card-status status--{{item.statusClass}}">{{item.status}}</view>
+      </view>
+      <view class="card-row"><text class="card-key">教练</text><text class="card-val">{{item.coach}}</text></view>
+      <view class="card-row"><text class="card-key">时间</text><text class="card-val">{{item.courseTime}}</text></view>
+      <view class="card-row"><text class="card-key">人数</text><text class="card-val">{{item.people}} 人</text></view>
+      <view class="card-row"><text class="card-key">备注</text><text class="card-val">{{item.remark || '无'}}</text></view>
+      <view class="card-foot">
+        <view class="card-time">预约于 {{item.bookingTime}}</view>
+        <view wx:if="{{item.status === '已预约'}}" class="card-cancel" data-id="{{item.id}}" bindtap="onCancel">取消预约</view>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading"><view class="spinner"></view><text>正在加载...</text></view>
+    <view wx:if="{{!loading && bookings.length === 0}}" class="empty">
+      <view class="empty-emoji">📭</view><view class="empty-text">暂无预约</view>
+    </view>
+  </view>
+</view>

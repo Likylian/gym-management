@@ -1,0 +1,49 @@
+<!-- pages/my-member-cards/my-member-cards.wxml -->
+<view class="page">
+
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">会员卡</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <view class="list">
+    <view
+      wx:for="{{cards}}"
+      wx:key="id"
+      class="mcard mcard--{{item.theme}}"
+    >
+      <!-- 左侧票面 -->
+      <view class="mcard-left">
+        <view class="mcard-left-num">¥{{item.displayValue}}</view>
+        <view class="mcard-left-sub">{{item.displayUnit}}</view>
+      </view>
+
+      <!-- 中间信息 -->
+      <view class="mcard-mid">
+        <view class="mcard-name">{{item.cardName}}</view>
+        <view class="mcard-row">适用场馆：<text class="mcard-val">全部场馆</text></view>
+        <view class="mcard-row">有效期至：<text class="mcard-val">{{item.expireTimeLabel}}</text></view>
+      </view>
+
+      <!-- 右侧按钮 -->
+      <view class="mcard-right" data-id="{{item.id}}" data-type="{{item.cardType}}" bindtap="onUse">
+        <text class="mcard-action">去使用</text>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading">
+      <view class="spinner"></view><text>加载中...</text>
+    </view>
+    <view wx:if="{{!loading && cards.length === 0}}" class="empty">
+      <view class="empty-emoji">💳</view><text>暂无会员卡</text>
+      <view class="empty-go" bindtap="goBuy">去买一张</view>
+    </view>
+
+    <!-- 列表不为空时，底部也加一个购买入口 -->
+    <view wx:if="{{!loading && cards.length > 0}}" class="footer-action" bindtap="goBuy">
+      <text class="footer-icon">+</text>
+      <text class="footer-text">购买新会员卡</text>
+    </view>
+  </view>
+</view>

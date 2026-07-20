@@ -18,6 +18,7 @@ public class Booking {
     private String courseTime;
     private String coach;
     private String memberCard;
+    private Long memberCardId;        // 实际扣除的那张会员卡 id
     private String remark;
     private String status;
     private LocalDateTime bookingTime;

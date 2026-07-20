@@ -28,6 +28,6 @@ Page({
   },
 
   goMyBookings() {
-    wx.switchTab({ url: '/pages/booking/booking' });
+    wx.navigateTo({ url: '/pages/my-bookings/my-bookings' });
   }
 });

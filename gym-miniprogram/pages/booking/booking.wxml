@@ -110,7 +110,7 @@
         wx:for="{{privateList}}"
         wx:key="id"
         class="private-card"
-        data-id="{{item.id}}"
+        data-item="{{item}}"
         bindtap="goCourseDetail"
       >
         <view class="private-cover cover-{{item.colorIdx}}">

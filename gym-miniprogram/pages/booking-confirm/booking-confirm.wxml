@@ -68,6 +68,32 @@
           <text class="pay-arrow">›</text>
         </view>
       </view>
+
+      <!-- 选了会员卡时，显示可用的卡列表 -->
+      <view wx:if="{{payMethod === 'card'}}" class="card-list">
+        <view wx:if="{{myMemberCards.length === 0}}" class="card-empty">
+          暂无可用会员卡，<text class="card-buy" bindtap="goBuy">去购买 ›</text>
+        </view>
+        <view
+          wx:for="{{myMemberCards}}"
+          wx:key="id"
+          class="card-row {{ item.id === selectedMemberCardId ? 'card-row--checked' : '' }}"
+          data-id="{{item.id}}"
+          bindtap="selectMemberCard"
+        >
+          <view class="card-row-icon {{item.cardType === '次卡' ? 'card-icon--orange' : item.cardType === '储值' || item.cardType === '储值卡' ? 'card-icon--teal' : 'card-icon--purple'}}">
+            <text class="card-icon-text">{{item.cardType === '次卡' ? '次' : item.cardType === '储值' || item.cardType === '储值卡' ? '储' : '期'}}</text>
+          </view>
+          <view class="card-row-body">
+            <view class="card-row-name">{{item.cardName}}</view>
+            <view class="card-row-info">
+              <text class="card-row-value">{{item.displayValue}}</text>
+              <text class="card-row-unit">{{item.displayUnit}}</text>
+            </view>
+          </view>
+          <view class="card-row-check {{ item.id === selectedMemberCardId ? 'card-row-check--on' : '' }}"></view>
+        </view>
+      </view>
     </view>
 
     <!-- 温馨提示 -->

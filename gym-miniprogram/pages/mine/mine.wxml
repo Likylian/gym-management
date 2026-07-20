@@ -14,12 +14,12 @@
 
     <!-- 功能菜单（占位） -->
     <view class="menu">
-      <view class="menu-item">
+      <view class="menu-item" bindtap="goMyBookings">
         <text class="menu-icon">📅</text>
         <text class="menu-label">我的预约</text>
         <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-item">
+      <view class="menu-item" bindtap="goMyMemberCards">
         <text class="menu-icon">💳</text>
         <text class="menu-label">会员卡</text>
         <text class="menu-arrow">›</text>

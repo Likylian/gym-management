@@ -261,8 +261,17 @@ Page({
       ].join('&');
       wx.navigateTo({ url: `/pages/group-detail/group-detail?${params}` });
     } else {
-      // 私教：暂用 toast
-      wx.showToast({ title: '私教详情待开发', icon: 'none' });
+      // 私教跳详情
+      const params = [
+        `courseId=${item.id}`,
+        `courseName=${encodeURIComponent(item.name)}`,
+        `coach=${encodeURIComponent(item.coachTag ? item.coachTag.replace('教练亲临', '') : '')}`,
+        `price1=800`,
+        `price6=700`,
+        `price10=600`,
+        `venueName=${encodeURIComponent(this.data.currentVenue ? this.data.currentVenue.name : '健身场馆')}`
+      ].join('&');
+      wx.navigateTo({ url: `/pages/private-detail/private-detail?${params}` });
     }
   },
 

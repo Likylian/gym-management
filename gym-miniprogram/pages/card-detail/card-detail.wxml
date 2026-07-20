@@ -1,0 +1,99 @@
+<!-- pages/card-detail/card-detail.wxml -->
+<view class="page" wx:if="{{card}}">
+
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">会员卡详情</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <scroll-view scroll-y class="scroll">
+
+    <!-- 顶部大卡 -->
+    <view class="mcard mcard--{{card.coverColor}}">
+      <view class="mcard-name">{{card.name}}</view>
+      <view class="mcard-type">{{card.cardType}}类型</view>
+      <view class="mcard-row">支持场馆：<text class="mcard-val">{{card.supportedVenues}}</text></view>
+      <view class="mcard-row" wx:if="{{card.days}}">使用期限：<text class="mcard-val">{{card.days}}天</text></view>
+      <view class="mcard-row" wx:if="{{card.times}}">使用次数：<text class="mcard-val">{{card.times}}次</text></view>
+      <view class="mcard-foot">
+        <text class="mcard-price">售价：<text class="mcard-price-val">¥{{card.basePrice}}</text></text>
+        <text class="mcard-origin">¥{{card.originalPrice}}</text>
+      </view>
+    </view>
+
+    <!-- 选择规格 -->
+    <view class="block">
+      <view class="block-title">选择规格</view>
+      <view class="spec-list">
+        <view
+          wx:for="{{card.specs}}"
+          wx:key="id"
+          class="spec-row {{ item.id === selectedSpecId ? 'spec-row--checked' : '' }}"
+          data-id="{{item.id}}"
+          bindtap="selectSpec"
+        >
+          <view class="spec-info">
+            <view class="spec-label">{{item.label}}</view>
+            <view class="spec-original">原价 ¥{{item.originalPrice}}</view>
+            <view class="spec-days" wx:if="{{item.days}}">使用期限：{{item.days}}天</view>
+          </view>
+          <view class="spec-radio {{ item.id === selectedSpecId ? 'spec-radio--checked' : '' }}"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 选择销售人员 -->
+    <view class="block">
+      <view class="block-title">选择销售人员</view>
+      <picker
+        mode="selector"
+        range="{{salesmen}}"
+        range-key="name"
+        value="{{salesmanIndex}}"
+        bindchange="onSalesmanChange"
+      >
+        <view class="picker-row">
+          <text class="picker-text {{ selectedSalesman ? '' : 'picker-text--placeholder' }}">
+            {{ selectedSalesman ? selectedSalesman.name : '选择销售人员' }}
+          </text>
+          <text class="picker-arrow">⌄</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 协议 + 支付方式 -->
+    <view class="block">
+      <view class="agree-row" bindtap="toggleAgree">
+        <view class="agree-check {{ agreed ? 'agree-check--checked' : '' }}"></view>
+        <text class="agree-text">勾选同意</text>
+        <text class="agree-link" catchtap="goAgreement">《会员服务协议》</text>
+      </view>
+      <view class="pay-row">
+        <text class="pay-label">支付方式</text>
+        <view class="pay-option">
+          <text class="pay-icon">💬</text>
+          <text class="pay-name">微信支付</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 底部操作条 -->
+  <view class="submit-bar">
+    <view class="submit-left">
+      <text class="submit-service">💬 联系客服</text>
+    </view>
+    <view class="submit-price">
+      <text class="submit-price-val">¥{{currentPrice}}</text>
+      <text class="submit-price-label">应付价格</text>
+    </view>
+    <view class="submit-btn {{ canBuy ? '' : 'submit-btn--disabled' }}" bindtap="onBuy">立即购买</view>
+  </view>
+</view>
+
+<view wx:else class="loading-state">
+  <view class="spinner"></view><text>加载中...</text>
+</view>

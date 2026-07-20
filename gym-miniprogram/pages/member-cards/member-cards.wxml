@@ -1,0 +1,53 @@
+<!-- pages/member-cards/member-cards.wxml -->
+<view class="page">
+
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">会员卡</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <!-- 4 个 tab：全部 / 次卡 / 储值 / 期限 -->
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="*this"
+      class="tab {{ item === activeTab ? 'tab--active' : '' }}"
+      data-name="{{item}}"
+      bindtap="switchTab"
+    >{{item}}</view>
+  </view>
+
+  <!-- 卡片列表 -->
+  <view class="list">
+    <view
+      wx:for="{{cards}}"
+      wx:key="id"
+      class="mcard mcard--{{item.coverColor}}"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <view class="mcard-top">
+        <text class="mcard-name">{{item.name}}</text>
+        <text class="mcard-type">{{item.cardType}}类型</text>
+      </view>
+      <view class="mcard-row">支持场馆：<text class="mcard-val">{{item.supportedVenues}}</text></view>
+      <view class="mcard-row" wx:if="{{item.cardType === '次卡'}}">使用期限：<text class="mcard-val">{{item.days}}天</text></view>
+      <view class="mcard-row" wx:if="{{item.cardType === '次卡'}}">使用次数：<text class="mcard-val">{{item.times}}次</text></view>
+      <view class="mcard-row" wx:if="{{item.cardType === '期限'}}">使用期限：<text class="mcard-val">{{item.days}}天</text></view>
+      <view class="mcard-row" wx:if="{{item.cardType === '储值'}}">可用余额：<text class="mcard-val">¥{{item.basePrice}}</text></view>
+      <view class="mcard-foot">
+        <text class="mcard-price">售价：<text class="mcard-price-val">¥{{item.basePrice}}</text></text>
+        <text class="mcard-origin">¥{{item.originalPrice}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading">
+      <view class="spinner"></view><text>加载中...</text>
+    </view>
+    <view wx:if="{{!loading && cards.length === 0}}" class="empty">
+      <view class="empty-emoji">📭</view><text>暂无该类型会员卡</text>
+    </view>
+  </view>
+</view>

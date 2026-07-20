@@ -30,6 +30,16 @@ public class PrivateCourseController {
         return Result.success(privateCourseService.page(page, wrapper));
     }
 
+    @GetMapping("/all")
+    public Result<java.util.List<PrivateCourse>> all() {
+        return Result.success(privateCourseService.list());
+    }
+
+    @GetMapping("/{id}")
+    public Result<PrivateCourse> detail(@PathVariable Long id) {
+        return Result.success(privateCourseService.getById(id));
+    }
+
     @PostMapping
     public Result<Void> add(@RequestBody PrivateCourse course) {
         privateCourseService.save(course);

@@ -34,7 +34,10 @@ public class SecurityConfig {
                 // 首页/详情等浏览型接口允许匿名 GET
                 .requestMatchers(HttpMethod.GET, "/api/venues/**", "/api/coaches/**",
                         "/api/group-courses/**", "/api/private-courses/**",
-                        "/api/products/**", "/api/dashboard/**").permitAll()
+                        "/api/private-slots/**",
+                        "/api/products/**", "/api/card-products/**",
+                        "/api/member-cards/**",
+                        "/api/dashboard/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
