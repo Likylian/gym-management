@@ -1,0 +1,29 @@
+# Node.js / frontend
+node_modules/
+dist/
+.vscode/
+
+# Java backend
+**/target/
+*.class
+*.jar
+*.war
+*.log
+
+# IDE
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 个人配置（不共享，每人自己配）
+project.private.config.json
+
+# WorkBuddy
+.workbuddy/
+
+# 临时文件
+*.tmp
+*.bak

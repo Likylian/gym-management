@@ -1,0 +1,96 @@
+<!-- pages/venue-detail/venue-detail.wxml -->
+<view class="detail-page" wx:if="{{venue}}">
+
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">场馆详情</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <!-- 顶部图集（轮播） -->
+  <view class="gallery">
+    <scroll-view scroll-x class="gallery-scroll" enable-flex enhanced bounces>
+      <view wx:for="{{gallery}}" wx:key="*this" class="gallery-item cover-{{item.colorIdx}}">
+        <text class="gallery-emoji">{{item.emoji}}</text>
+        <text class="gallery-label">{{item.label}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 场馆介绍 -->
+  <view class="block">
+    <view class="block-title"><text class="bar"></text><text>场馆介绍</text></view>
+    <view class="block-body">
+      <view class="paragraph">{{venue.intro1}}</view>
+      <view class="big-img cover-{{gallery[0].colorIdx}}">
+        <text class="big-emoji">🏋️</text>
+        <text class="big-label">健身房实景</text>
+      </view>
+      <view class="paragraph">{{venue.intro2}}</view>
+    </view>
+  </view>
+
+  <!-- 设施配套 -->
+  <view class="block">
+    <view class="block-title"><text class="bar"></text><text>设施配套</text></view>
+    <view class="facilities">
+      <view wx:for="{{facilities}}" wx:key="*this" class="facility">
+        <text class="facility-emoji">{{item.emoji}}</text>
+        <text class="facility-label">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 教练团队 -->
+  <view class="block" wx:if="{{coaches.length > 0}}">
+    <view class="block-title"><text class="bar"></text><text>驻店教练</text></view>
+    <view class="coach-list">
+      <view wx:for="{{coaches}}" wx:key="id" class="coach-card">
+        <view class="coach-avatar cover-{{item.colorIdx}}">
+          <text>{{item.emoji}}</text>
+        </view>
+        <view class="coach-name">{{item.name}}</view>
+        <view class="coach-tag">{{item.tag}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 场馆地址 -->
+  <view class="block">
+    <view class="block-title"><text class="bar"></text><text>场馆地址</text></view>
+    <view class="block-body">
+      <view class="contact-row">
+        <text class="contact-icon">📍</text>
+        <text class="contact-text">{{venue.address}}</text>
+      </view>
+      <view class="contact-row">
+        <text class="contact-icon">📞</text>
+        <text class="contact-text">{{venue.phone}}</text>
+      </view>
+      <view class="contact-row">
+        <text class="contact-icon">⏰</text>
+        <text class="contact-text">营业时间 06:00 - 23:00</text>
+      </view>
+      <view class="rating-row">
+        <view class="stars">
+          <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="star">★</text>
+        </view>
+        <text class="rating-text">5.0 好评</text>
+        <text class="review-count">（{{reviewCount}} 条评价）</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- 悬浮预约按钮 -->
+  <view class="fab" bindtap="onBook">预约课程</view>
+</view>
+
+<!-- 加载中 -->
+<view wx:else class="loading-state">
+  <view class="loading-spinner"></view>
+  <text>正在加载...</text>
+</view>

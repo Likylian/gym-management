@@ -1,0 +1,6 @@
+<view class="placeholder">
+  <view class="ph-emoji">💬</view>
+  <view class="ph-title">消息中心</view>
+  <view class="ph-sub">系统通知 / 课程提醒 / 优惠活动</view>
+  <view class="ph-tag">开发中</view>
+</view>

@@ -1,0 +1,140 @@
+<!-- pages/group-detail/group-detail.wxml -->
+<view class="detail-page" wx:if="{{course}}">
+
+  <!-- 顶部图 -->
+  <view class="cover cover-{{course.colorIdx}}">
+    <view class="cover-emoji">{{course.emoji}}</view>
+  </view>
+
+  <!-- 课程基本信息 -->
+  <view class="course-head">
+    <view class="course-row1">
+      <text class="course-tag">团课</text>
+      <text class="course-name">{{course.name}}课程火热预约</text>
+    </view>
+    <view class="course-row2">
+      <text class="price-symbol">¥</text>
+      <text class="price-num">{{course.price}}</text>
+      <text class="price-unit">元/次</text>
+      <text class="price-origin">¥{{course.originPrice}}</text>
+      <text class="course-tag-right" style="background:#{{course.tagColor}}">{{course.tag}}</text>
+    </view>
+  </view>
+
+  <!-- 3 tab -->
+  <view class="tabbar">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="*this"
+      class="tab {{ tabIdx === index ? 'tab--active' : '' }}"
+      data-idx="{{index}}"
+      bindtap="switchTab"
+    >{{item}}</view>
+  </view>
+
+  <!-- tab 内容：详情 -->
+  <view wx:if="{{tabIdx === 0}}" class="tab-body">
+    <!-- 教练介绍 -->
+    <view class="block">
+      <view class="block-title"><text class="bar"></text><text>教练介绍</text></view>
+      <view class="coach-card">
+        <view class="coach-avatar cover-{{course.coachColorIdx}}">
+          <text>{{course.coachEmoji}}</text>
+        </view>
+        <view class="coach-info">
+          <view class="coach-name">{{course.coach}}教练</view>
+          <view wx:for="{{course.coachTitles}}" wx:key="*this" class="coach-title">· {{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程介绍（差异化） -->
+    <view class="block">
+      <view class="block-title"><text class="bar"></text><text>课程介绍</text></view>
+      <view class="block-body">
+        <view wx:for="{{course.sections}}" wx:key="title" class="course-section">
+          <view class="section-title">{{item.title}}</view>
+          <view class="section-content">{{item.content}}</view>
+          <view wx:if="{{item.image}}" class="section-img cover-{{item.imageIdx}}">
+            <text class="section-img-emoji">{{item.imageEmoji}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- tab 内容：支持会员卡 -->
+  <view wx:if="{{tabIdx === 1}}" class="tab-body">
+    <view class="block">
+      <view class="block-body">
+        <view wx:for="{{course.memberCards}}" wx:key="id" class="mcard mcard--{{item.theme}}">
+          <view class="mcard-name">{{item.name}}</view>
+          <view class="mcard-row">支持场馆：<text class="mcard-val">{{item.venues}}</text></view>
+          <view class="mcard-row">{{item.typeLabel}}：<text class="mcard-val">{{item.typeValue}}</text></view>
+          <view class="mcard-row">本卡可抵扣：<text class="mcard-val">{{item.discount}}</text></view>
+          <view class="mcard-btn" data-id="{{item.id}}" bindtap="buyCard">购买会员卡</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- tab 内容：评论 -->
+  <view wx:if="{{tabIdx === 2}}" class="tab-body">
+    <view class="block">
+      <view class="block-body">
+        <view wx:for="{{course.reviews}}" wx:key="idx" class="review">
+          <view class="review-head">
+            <view class="review-avatar cover-{{item.avatarColor}}">
+              <text>{{item.avatarText}}</text>
+            </view>
+            <view class="review-meta">
+              <view class="review-name">{{item.name}}</view>
+              <view class="review-time">{{item.time}}前</view>
+            </view>
+          </view>
+          <view class="review-text">{{item.text}}</view>
+          <view class="review-tags">
+            <text wx:for="{{item.tags}}" wx:for-item="t" wx:key="*this" class="tag-orange">{{t}}</text>
+          </view>
+          <view class="review-imgs">
+            <view wx:for="{{item.imgs}}" wx:key="*this" class="review-img cover-{{item}}">
+              <text class="review-img-emoji">{{reviewEmojis[item]}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部留白 + 操作条 -->
+  <view class="bottom-spacer"></view>
+
+  <view class="action-bar">
+    <view class="action-side" bindtap="contactCoach">
+      <text class="action-emoji">📞</text>
+      <text class="action-label">联系教练</text>
+    </view>
+    <view class="action-side" bindtap="shareCourse">
+      <text class="action-emoji">↗</text>
+      <text class="action-label">分享课程</text>
+    </view>
+    <view class="action-main" bindtap="goBook">立即约课</view>
+  </view>
+
+  <!-- 约课确认弹层 -->
+  <view wx:if="{{showConfirm}}" class="modal-mask" bindtap="cancelConfirm">
+    <view class="modal-box" catchtap="">
+      <view class="modal-text">确认要预约该课程？</view>
+      <view class="modal-btns">
+        <view class="modal-btn modal-btn--cancel" bindtap="cancelConfirm">取消</view>
+        <view class="modal-btn modal-btn--ok" bindtap="confirmBook">确定</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 加载 -->
+<view wx:else class="loading-state">
+  <view class="loading-spinner"></view>
+  <text>正在加载...</text>
+</view>

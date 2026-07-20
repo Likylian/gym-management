@@ -1,0 +1,91 @@
+<!-- pages/booking-confirm/booking-confirm.wxml -->
+<view class="confirm-page">
+
+  <!-- 自定义 navbar -->
+  <view class="navbar">
+    <view class="navbar-back" bindtap="goBack">‹</view>
+    <view class="navbar-title">约课确认页</view>
+    <view class="navbar-right"></view>
+  </view>
+
+  <scroll-view scroll-y class="scroll">
+
+    <!-- 预约信息 -->
+    <view class="block">
+      <view class="block-title"><text class="bar bar--green"></text><text>预约信息</text></view>
+      <view class="info-table">
+        <view class="row"><text class="row-key">课程：</text><text class="row-val">{{info.courseName}}</text></view>
+        <view class="row"><text class="row-key">日期：</text><text class="row-val">{{info.dateLabel}}</text></view>
+        <view class="row"><text class="row-key">时间：</text><text class="row-val">{{info.timeLabel}}</text></view>
+        <view class="row"><text class="row-key">场馆：</text><text class="row-val">{{info.venueName}}</text></view>
+        <view class="row"><text class="row-key">场地：</text><text class="row-val">成人团课区</text></view>
+        <view class="row"><text class="row-key">成团人数：</text><text class="row-val">{{info.capacity}}人</text></view>
+        <view class="row"><text class="row-key">教练：</text><text class="row-val">{{info.coach}}</text></view>
+      </view>
+
+      <!-- 预约人数 stepper -->
+      <view class="stepper-row">
+        <text class="stepper-key"><text class="req">*</text> 预约人数：</text>
+        <view class="stepper">
+          <view class="stepper-btn" bindtap="onMinus">-</view>
+          <text class="stepper-num">{{people}}</text>
+          <view class="stepper-btn" bindtap="onPlus">+</view>
+        </view>
+      </view>
+
+      <!-- 备注 -->
+      <textarea
+        class="remark"
+        placeholder="填写预约备注，该信息会被教练看到"
+        maxlength="200"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      ></textarea>
+    </view>
+
+    <!-- 选择支付方式 -->
+    <view class="block">
+      <view class="block-title"><text class="bar bar--green"></text><text>选择支付方式</text></view>
+      <view class="pay-list">
+        <view
+          class="pay-item {{ payMethod === 'wechat' ? 'pay-item--checked' : '' }}"
+          data-method="wechat"
+          bindtap="selectPay"
+        >
+          <view class="pay-radio {{ payMethod === 'wechat' ? 'pay-radio--checked' : '' }}"></view>
+          <text class="pay-emoji">💬</text>
+          <text class="pay-name">微信支付</text>
+          <text class="pay-arrow">›</text>
+        </view>
+        <view
+          class="pay-item {{ payMethod === 'card' ? 'pay-item--checked' : '' }}"
+          data-method="card"
+          bindtap="selectPay"
+        >
+          <view class="pay-radio {{ payMethod === 'card' ? 'pay-radio--checked' : '' }}"></view>
+          <text class="pay-emoji">💳</text>
+          <text class="pay-name">会员卡</text>
+          <text class="pay-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 温馨提示 -->
+    <view class="block">
+      <view class="block-title"><text class="bar bar--green"></text><text>温馨提示</text></view>
+      <view class="tips">
+        <view>· 预约成功后自动扣除相应的费用。</view>
+        <view>· 取消预约不扣除费用。</view>
+        <view>· 开课前 2 小时不可取消预约。</view>
+        <view>· 如有问题请联系客服。</view>
+      </view>
+    </view>
+
+    <view class="bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-bar">
+    <view class="submit-btn" bindtap="onSubmit">提交预约并支付</view>
+  </view>
+</view>
