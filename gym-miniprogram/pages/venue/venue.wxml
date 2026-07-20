@@ -1,0 +1,57 @@
+<!-- pages/venue/venue.wxml -->
+<view class="venue-page">
+
+  <!-- 自定义顶部导航 -->
+  <view class="navbar">
+    <view class="navbar-title">场馆</view>
+    <view class="navbar-actions">
+      <view class="navbar-icon" bindtap="onSearch">🔍</view>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list">
+    <view
+      wx:for="{{venues}}"
+      wx:key="id"
+      class="card"
+      data-id="{{item.id}}"
+      bindtap="goDetail"
+    >
+      <!-- 封面 -->
+      <view class="cover cover-{{item.colorIdx}}">
+        <text class="cover-emoji">{{item.emoji}}</text>
+      </view>
+
+      <!-- 信息 -->
+      <view class="info">
+        <view class="name">{{item.name}}</view>
+        <view class="addr">地址：{{item.address}}</view>
+        <view class="phone">电话：{{item.phone}}</view>
+      </view>
+
+      <!-- 右侧：距离 + 状态 -->
+      <view class="right">
+        <view class="distance">
+          <text class="dist-icon">📍</text>
+          <text>{{item.distance}}</text>
+        </view>
+        <view class="status status--{{item.status === 1 ? 'open' : 'closed'}}">
+          {{item.status === 1 ? '开放' : '闭馆'}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{!loading && venues.length === 0}}" class="empty">
+      <view class="empty-emoji">🏢</view>
+      <view class="empty-text">暂无场馆数据</view>
+    </view>
+
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading">
+      <view class="loading-spinner"></view>
+      <text>正在加载...</text>
+    </view>
+  </view>
+</view>

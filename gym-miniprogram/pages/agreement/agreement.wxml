@@ -1,0 +1,43 @@
+<!-- pages/agreement/agreement.wxml -->
+<view class="page">
+  <view class="container">
+    <view class="title">用户协议</view>
+    <view class="update-time">更新日期：2024-01-20</view>
+
+    <view class="section">
+      <view class="h2">一、服务说明</view>
+      <view class="p">健身预约系统（以下简称"本平台"）为您提供健身房课程预约、会员卡管理、商品购买、订单查询等服务。在使用本平台服务前，请您仔细阅读本协议。</view>
+    </view>
+
+    <view class="section">
+      <view class="h2">二、账户注册</view>
+      <view class="p">1. 您可以使用本人手机号注册账户，本平台将向您发送验证码以验证身份。</view>
+      <view class="p">2. 未注册的手机号首次登录时，本平台将自动为您创建账户。</view>
+      <view class="p">3. 您应妥善保管账户信息，因账户泄露导致的一切后果由您自行承担。</view>
+    </view>
+
+    <view class="section">
+      <view class="h2">三、服务使用</view>
+      <view class="p">1. 您可在线浏览场馆、教练、团课、私教课程信息，并完成预约。</view>
+      <view class="p">2. 您可购买会员卡、储值卡，并使用对应权益进行课程预约。</view>
+      <view class="p">3. 您可在商城购买健身相关商品，享受相应售后服务。</view>
+    </view>
+
+    <view class="section">
+      <view class="h2">四、用户行为规范</view>
+      <view class="p">1. 您承诺不以任何形式侵犯他人合法权益。</view>
+      <view class="p">2. 不得利用本平台从事违法违规活动。</view>
+      <view class="p">3. 不得干扰本平台的正常运营。</view>
+    </view>
+
+    <view class="section">
+      <view class="h2">五、协议变更</view>
+      <view class="p">本平台有权根据需要修改本协议，修改后的协议将在本页面公布，请您定期查阅。</view>
+    </view>
+
+    <view class="section">
+      <view class="h2">六、联系我们</view>
+      <view class="p">如您对本协议有任何疑问，可通过本平台公布的联系方式与我们联系。</view>
+    </view>
+  </view>
+</view>

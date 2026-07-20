@@ -1,30 +1,29 @@
-# ===== 通用 =====
+# Node.js / frontend
+node_modules/
+dist/
+.vscode/
+
+# Java backend
+**/target/
+*.class
+*.jar
+*.war
 *.log
-*.tmp
+
+# IDE
+.idea/
+*.iml
+
+# OS
 .DS_Store
 Thumbs.db
 
-# ===== 后端 (Spring Boot) =====
-gym-backend/target/
-gym-backend/*.jar
-gym-backend/.idea/
-gym-backend/*.iml
-gym-backend/.mvn/
+# 个人配置（不共享，每人自己配）
+project.private.config.json
 
-# ===== 前端 (Vue) =====
-gym-frontend/node_modules/
-gym-frontend/dist/
-gym-frontend/.vite/
-gym-frontend/*.local
+# WorkBuddy
+.workbuddy/
 
-# ===== IDE =====
-.idea/
-*.iml
-.vscode/
-*.swp
-*.swo
-
-# ===== 环境变量 =====
-.env
-.env.*
-!.env.example
+# 临时文件
+*.tmp
+*.bak

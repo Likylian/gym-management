@@ -1,0 +1,164 @@
+/* pages/login/login.wxss */
+
+.login-page {
+  min-height: 100vh;
+  padding: 80rpx 60rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 顶部 Logo + 标题 ---------- */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+  margin-top: 60rpx;
+}
+
+.logo {
+  width: 144rpx;
+  height: 144rpx;
+  border-radius: 50%;
+  background: #4A90E2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(74, 144, 226, 0.3);
+}
+
+.logo-emoji {
+  font-size: 72rpx;
+  line-height: 1;
+}
+
+.title {
+  margin-top: 40rpx;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 2rpx;
+}
+
+/* ---------- 表单 ---------- */
+.form {
+  width: 100%;
+  margin-bottom: 24rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  height: 88rpx;
+  padding: 0 28rpx;
+  border: 2rpx solid #e8e8e8;
+  border-radius: 44rpx;
+  margin-bottom: 28rpx;
+  background: #ffffff;
+}
+
+.form-label {
+  width: 96rpx;
+  font-size: 28rpx;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1a1a1a;
+  height: 100%;
+}
+
+.form-input.code-input {
+  padding-right: 16rpx;
+}
+
+.ph {
+  color: #c0c0c0;
+  font-size: 28rpx;
+}
+
+.send-code {
+  flex-shrink: 0;
+  padding: 0 20rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: 26rpx;
+  color: #4A90E2;
+  border-left: 2rpx solid #e8e8e8;
+  margin-left: 12rpx;
+}
+
+.send-code.disabled {
+  color: #b8b8b8;
+}
+
+/* ---------- 提示文字 ---------- */
+.hint {
+  font-size: 24rpx;
+  color: #888888;
+  margin: 8rpx 0 40rpx 8rpx;
+}
+
+/* ---------- 协议勾选 ---------- */
+.agreement {
+  display: flex;
+  align-items: center;
+  margin-bottom: 56rpx;
+}
+
+.checkbox {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #c8c8c8;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.checkbox--checked {
+  border-color: #4A90E2;
+}
+
+.checkbox-tick {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #4A90E2;
+}
+
+.agreement-text {
+  font-size: 24rpx;
+  color: #666666;
+  flex: 1;
+}
+
+.link {
+  color: #4A90E2;
+}
+
+/* ---------- 登录按钮 ---------- */
+.login-btn {
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: #4A90E2;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 500;
+  border-radius: 48rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 20rpx rgba(74, 144, 226, 0.35);
+}
+
+.login-btn[disabled] {
+  background: #9ec5f0;
+  color: #ffffff;
+  box-shadow: none;
+}
